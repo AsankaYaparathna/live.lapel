@@ -29,7 +29,7 @@ class AuthController {
                 const model = new Auth_1.Auth();
                 model.clientid = id;
                 model.clientsecret = cs;
-                model.clienturl = req.url;
+                model.clienturl = req.protocol + '://' + req.get('host');
                 yield new AuthRepo_1.AuthRepo().create(model);
                 res.status(200).json({ status: true, message: "Auth User created successfully!", data: model });
             }
@@ -41,9 +41,16 @@ class AuthController {
     generateToken(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                const reqUrl = req.protocol + '://' + req.get('host');
                 const { clientId, clientSecret } = req.body;
                 const result = yield new AuthRepo_1.AuthRepo().getById(clientId);
                 if (result) {
+                    const urlAuth = process.env.URL_AUTH === "true";
+                    if (urlAuth) {
+                        if (result.clienturl !== reqUrl) {
+                            return res.status(403).json({ message: "Unauthorized: Invalid client credentials" });
+                        }
+                    }
                     if (result.clientsecret.match(clientSecret)) {
                         const expiresIn = parseInt(process.env.JWT_EXPIRESIN || "300"); //5 * 60; // 5 minutes in seconds
                         const token = jsonwebtoken_1.default.sign({ clientId }, process.env.JWT_SC_KEY || "", { expiresIn });
@@ -57,7 +64,7 @@ class AuthController {
                     }
                 }
                 else {
-                    return res.status(401).json({ message: "Unauthorized: Invalid client credentials2" });
+                    return res.status(401).json({ message: "Unauthorized: Invalid client credentials" });
                 }
             }
             catch (err) {

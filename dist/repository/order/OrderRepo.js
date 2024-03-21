@@ -126,6 +126,42 @@ class OrderRepo {
             }
         });
     }
+    updateDeliveryDate(model) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const newModel = yield CartOrder_1.CartOrder.findOne({ where: { id: model.id }, });
+                if (!newModel) {
+                    return false;
+                }
+                else {
+                    newModel.deliveryMethod.deliveryDate = model.deliveryDate;
+                    yield newModel.save();
+                }
+                return true;
+            }
+            catch (err) {
+                throw new Error("Failed to update order! | " + err.message);
+            }
+        });
+    }
+    addSpecialNote(model) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const newModel = yield CartOrder_1.CartOrder.findOne({ where: { id: model.id }, });
+                if (!newModel) {
+                    return false;
+                }
+                else {
+                    newModel.specialNote = model.specialNote;
+                    yield newModel.save();
+                }
+                return true;
+            }
+            catch (err) {
+                throw new Error("Failed to update order! | " + err.message);
+            }
+        });
+    }
     updatePayment(model) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

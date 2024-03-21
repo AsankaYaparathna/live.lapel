@@ -47,6 +47,18 @@ class MaterialController {
             }
         });
     }
+    getRelatedFabric(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const id = req.params["id"];
+                const modal = yield new FabricRepo_1.FabricRepo().getRelatedFabric(id);
+                res.status(200).json({ status: true, message: "Successfully!", data: modal });
+            }
+            catch (err) {
+                res.status(400).json({ status: false, message: "" + err, data: null });
+            }
+        });
+    }
     updateFabric(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

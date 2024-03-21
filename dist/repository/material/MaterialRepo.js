@@ -119,9 +119,9 @@ class MaterialRepo {
             catch (err) {
                 const result = yield RowMaterial_1.RowMaterial.findOne({ where: { name: model.name } });
                 if (result) {
-                    throw new Error("Failed to create Fabric! Fabric with this name already exists!");
+                    throw new Error("Failed to create Row Material! Row Material with this name already exists!");
                 }
-                throw new Error("Failed to create Fabric! | " + err.message);
+                throw new Error("Failed to create Row Material! | " + err.message);
             }
         });
     }
@@ -186,7 +186,7 @@ class MaterialRepo {
                 return true;
             }
             catch (err) {
-                throw new Error("Failed to update Fabric! | " + err.message);
+                throw new Error("Failed to update Row Material! | " + err.message);
             }
         });
     }
@@ -263,7 +263,7 @@ class MaterialRepo {
                 return Wlist;
             }
             catch (err) {
-                throw new Error("Failed to get Fabric! | " + err.message);
+                throw new Error("Failed to get Row Material! | " + err.message);
             }
         });
     }
@@ -316,7 +316,7 @@ class MaterialRepo {
                 return Wlist;
             }
             catch (err) {
-                throw new Error("Failed to get Fabric! | " + err.message);
+                throw new Error("Failed to get Row Material! | " + err.message);
             }
         });
     }

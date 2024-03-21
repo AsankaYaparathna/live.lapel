@@ -22,6 +22,7 @@ const MainStock_1 = require("../../model/Metirial/Stock/MainStock");
 const Cost_1 = require("../../model/Metirial/Cost/Cost");
 const FabricItem_1 = require("../../model/Metirial/Fabric/FabricItem");
 const Supplier_1 = require("../../model/Metirial/Supplier/Supplier");
+const sequelize_1 = require("sequelize");
 class FabricRepo {
     create(model) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -260,6 +261,68 @@ class FabricRepo {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const result = yield Fabric_1.Fabric.findAll({ where: { id: id } });
+                if (!result || result.length === 0) {
+                    throw new Error("Data not found!");
+                }
+                const Wlist = [];
+                yield Promise.all(result.map((element) => __awaiter(this, void 0, void 0, function* () {
+                    const stocData = (yield MaterialStock_1.MaterialStock.findAll({ where: { customId: element.customId } }));
+                    const iconData = (yield Images_1.Image.findOne({ where: { id: element.icon } }));
+                    const qrData = (yield Images_1.Image.findOne({ where: { id: element.qr } }));
+                    const wimgList = (yield FabricImages_1.FabricImages.findAll({ where: { fabricId: element.id } }));
+                    let imgList = [];
+                    yield Promise.all(wimgList.map((imgElement) => __awaiter(this, void 0, void 0, function* () {
+                        const img = (yield Images_1.Image.findOne({ where: { id: imgElement.imageId } }));
+                        imgList.push(img);
+                    })));
+                    const relatedFab = (yield RelatedFabric_1.RelatedFabric.findAll({ where: { fabricId: element.id } }));
+                    const categoryData = (yield FabricItem_1.FabricItem.findAll({ where: { customId: element.customId } }));
+                    const costData = (yield Cost_1.Cost.findOne({ where: { customId: element.customId } }));
+                    const supplierData = (yield Supplier_1.Supplier.findOne({ where: { id: element.supplierId } }));
+                    const tempModel = {
+                        id: element.id,
+                        name: element.name,
+                        customId: element.customId,
+                        description: element.description,
+                        information: element.information,
+                        listingPriority: element.listingPriority,
+                        stockData: stocData,
+                        colorId: element.colorId,
+                        patterrnId: element.patterrnId,
+                        materialId: element.materialId,
+                        characteristicsId: element.characteristicsId,
+                        seriesId: element.seriesId,
+                        opacity: element.opacity,
+                        weightId: element.weightId,
+                        unitTypeId: element.unitTypeId,
+                        icon: iconData,
+                        qr: qrData,
+                        imageList: imgList,
+                        relatedFabric: relatedFab,
+                        levelOfSafty: element.levelOfSafty,
+                        stockAlert: element.stockAlert,
+                        featured: element.featured,
+                        live: element.live,
+                        stockMinus: element.stockMinus,
+                        category: categoryData,
+                        supplierId: supplierData,
+                        cost: costData,
+                    };
+                    Wlist.push(tempModel);
+                })));
+                return Wlist;
+            }
+            catch (err) {
+                throw new Error("Failed to get Fabric! | " + err.message);
+            }
+        });
+    }
+    getRelatedFabric(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const result = yield Fabric_1.Fabric.findAll({
+                    where: { [sequelize_1.Op.or]: [{ name: id }, { customId: id }] }
+                });
                 if (!result || result.length === 0) {
                     throw new Error("Data not found!");
                 }

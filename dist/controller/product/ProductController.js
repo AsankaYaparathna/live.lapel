@@ -218,6 +218,30 @@ class ProductController {
             }
         });
     }
+    getPackageStyleById(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const id = parseInt(req.params["id"], 10);
+                const modal = yield new CustomProductRepo_1.CustomProductRepo().getByIdWithType(id, "style");
+                res.status(200).json({ status: true, message: "Successfully!", data: modal });
+            }
+            catch (err) {
+                res.status(400).json({ status: false, message: "" + err, data: null });
+            }
+        });
+    }
+    getPackageAccentById(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const id = parseInt(req.params["id"], 10);
+                const modal = yield new CustomProductRepo_1.CustomProductRepo().getByIdWithType(id, "accent");
+                res.status(200).json({ status: true, message: "Successfully!", data: modal });
+            }
+            catch (err) {
+                res.status(400).json({ status: false, message: "" + err, data: null });
+            }
+        });
+    }
     updatePackage(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

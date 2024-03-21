@@ -81,6 +81,8 @@ class PackageRepo {
                             const newPkgElement = yield PackageElement_1.PackageElement.create({
                                 packageId: newCreatedModel.id,
                                 optionId: element.optionId,
+                                customProdId: element.customProdId,
+                                customProdName: element.customProdName,
                                 frontViewOrder: element.frontViewOrder,
                                 backViewOrder: element.backViewOrder
                             });

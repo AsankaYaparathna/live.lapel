@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const BaseRouter_1 = __importDefault(require("../base/BaseRouter"));
 const UserController_1 = __importDefault(require("../../controller/user/UserController"));
+const AuthController_1 = __importDefault(require("../../controller/auth/AuthController"));
 const UserShirtMeasurementController_1 = __importDefault(require("../../controller/user/Measurements/UserShirtMeasurementController"));
 const UserTrouserMeasurementController_1 = __importDefault(require("../../controller/user/Measurements/UserTrouserMeasurementController"));
 const UserBlazerMeasurementController_1 = __importDefault(require("../../controller/user/Measurements/UserBlazerMeasurementController"));
@@ -16,10 +17,13 @@ class UserRouts extends BaseRouter_1.default {
     routes() {
         // Public routes
         // Protected routes
-        //this.router.use(AuthController.authenticateToken);
+        const urlAuth = process.env.JWT_AUTH === "true";
+        if (urlAuth) {
+            this.router.use(AuthController_1.default.authenticateToken);
+        }
         this.router.post("/create/", (0, validate_1.default)(UserSchema_1.createUserSchema), UserController_1.default.create);
         this.router.post("/create/resendotp/", (0, validate_1.default)(UserSchema_1.verifyMobileSchema), UserController_1.default.resendOtp);
-        this.router.post("/verifyMobile/", (0, validate_1.default)(UserSchema_1.verifyOtpSchema), UserController_1.default.verifyMobile);
+        this.router.post("/verifyMobile/", UserController_1.default.verifyMobile);
         this.router.post("/login/", (0, validate_1.default)(UserSchema_1.loginSchema), UserController_1.default.login);
         this.router.patch("/update/:id", UserController_1.default.update);
         this.router.patch("/block/:id", UserController_1.default.block);

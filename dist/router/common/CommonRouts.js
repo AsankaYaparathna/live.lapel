@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const AuthController_1 = __importDefault(require("../../controller/auth/AuthController"));
 const CommonController_1 = __importDefault(require("../../controller/common/CommonController"));
 const BaseRouter_1 = __importDefault(require("../base/BaseRouter"));
 const multer_1 = __importDefault(require("multer"));
@@ -11,7 +12,10 @@ class CommonRouts extends BaseRouter_1.default {
         // Public routes
         // Protected routes
         //Auth
-        //this.router.use(AuthController.authenticateToken);
+        const urlAuth = process.env.JWT_AUTH === "true";
+        if (urlAuth) {
+            this.router.use(AuthController_1.default.authenticateToken);
+        }
         //Color
         this.router.post("/color/create/", CommonController_1.default.createColor);
         this.router.get("/color/get/", CommonController_1.default.getColor);

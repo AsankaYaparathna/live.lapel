@@ -3,12 +3,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const AuthController_1 = __importDefault(require("../../controller/auth/AuthController"));
 const ProductController_1 = __importDefault(require("../../controller/product/ProductController"));
 const BaseRouter_1 = __importDefault(require("../base/BaseRouter"));
 class ProductRouts extends BaseRouter_1.default {
     routes() {
         // Protected routes
-        //this.router.use(AuthController.authenticateToken);
+        const urlAuth = process.env.JWT_AUTH === "true";
+        if (urlAuth) {
+            this.router.use(AuthController_1.default.authenticateToken);
+        }
         //custom product
         this.router.post("/custom/create/", ProductController_1.default.createCustomProduct);
         this.router.get("/custom/get/", ProductController_1.default.getCustomProduct);
@@ -26,6 +30,9 @@ class ProductRouts extends BaseRouter_1.default {
         this.router.get("/custom/package/getById/:id", ProductController_1.default.getPackageById);
         this.router.patch("/custom/package/update/:id", ProductController_1.default.updatePackage);
         this.router.delete("/custom/package/delete/:id", ProductController_1.default.deletePackage);
+        //cstom config
+        this.router.get("/custom/config/styles/getByProdId/:id/", ProductController_1.default.getPackageStyleById);
+        this.router.get("/custom/config/accent/getByProdId/:id/", ProductController_1.default.getPackageAccentById);
         //Rady made
     }
 }

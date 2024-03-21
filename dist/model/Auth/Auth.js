@@ -14,29 +14,24 @@ const sequelize_typescript_1 = require("sequelize-typescript");
 let Auth = class Auth extends sequelize_typescript_1.Model {
 };
 exports.Auth = Auth;
-Auth.TABLE_NAME = "LAPEL_AUTH";
-Auth.Auth_ID = "id";
-Auth.Auth_Cid = "clientid";
-Auth.Auth_Cs = "clientsecret";
-Auth.Auth_Url = "clienturl";
 __decorate([
-    (0, sequelize_typescript_1.Column)({ type: sequelize_typescript_1.DataType.INTEGER, primaryKey: true, autoIncrement: true, field: Auth.Auth_ID }),
+    (0, sequelize_typescript_1.Column)({ type: sequelize_typescript_1.DataType.INTEGER, primaryKey: true, autoIncrement: true, field: "id" }),
     __metadata("design:type", Number)
 ], Auth.prototype, "id", void 0);
 __decorate([
-    (0, sequelize_typescript_1.Column)({ type: sequelize_typescript_1.DataType.STRING(255), field: Auth.Auth_Cid, unique: true }),
+    (0, sequelize_typescript_1.Column)({ type: sequelize_typescript_1.DataType.STRING(255), field: "clientid", unique: true }),
     __metadata("design:type", String)
 ], Auth.prototype, "clientid", void 0);
 __decorate([
-    (0, sequelize_typescript_1.Column)({ type: sequelize_typescript_1.DataType.STRING(255), field: Auth.Auth_Cs, }),
+    (0, sequelize_typescript_1.Column)({ type: sequelize_typescript_1.DataType.STRING(255), field: "clientsecret", }),
     __metadata("design:type", String)
 ], Auth.prototype, "clientsecret", void 0);
 __decorate([
-    (0, sequelize_typescript_1.Column)({ type: sequelize_typescript_1.DataType.STRING(255), field: Auth.Auth_Url }),
+    (0, sequelize_typescript_1.Column)({ type: sequelize_typescript_1.DataType.STRING(255), field: "clienturl" }),
     __metadata("design:type", String)
 ], Auth.prototype, "clienturl", void 0);
 exports.Auth = Auth = __decorate([
-    (0, sequelize_typescript_1.Table)({ tableName: Auth.TABLE_NAME,
+    (0, sequelize_typescript_1.Table)({ tableName: "LAPEL_AUTH",
         timestamps: true,
         updatedAt: 'updatedAt',
         createdAt: 'createdAt'

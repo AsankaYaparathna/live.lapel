@@ -75,6 +75,38 @@ class OrderController {
             }
         });
     }
+    updateDeleveryDate(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const modal = req.body;
+                const user = yield new OrderRepo_1.OrderRepo().updateDeliveryDate(modal);
+                res.status(200).json({
+                    status: user ? true : false,
+                    message: user ? "Successfully!" : "Data Not Found!",
+                    data: user ? modal : null,
+                });
+            }
+            catch (err) {
+                res.status(400).json({ status: false, message: "" + err, data: null, });
+            }
+        });
+    }
+    addSpecialNote(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const modal = req.body;
+                const user = yield new OrderRepo_1.OrderRepo().addSpecialNote(modal);
+                res.status(200).json({
+                    status: user ? true : false,
+                    message: user ? "Successfully!" : "Data Not Found!",
+                    data: user ? modal : null,
+                });
+            }
+            catch (err) {
+                res.status(400).json({ status: false, message: "" + err, data: null, });
+            }
+        });
+    }
     updatePayment(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

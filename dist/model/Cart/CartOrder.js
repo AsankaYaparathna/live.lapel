@@ -56,6 +56,10 @@ __decorate([
     __metadata("design:type", Object)
 ], CartOrder.prototype, "deliveryMethod", void 0);
 __decorate([
+    (0, sequelize_typescript_1.Column)({ type: sequelize_typescript_1.DataType.DATE, field: "deliveryDate" }),
+    __metadata("design:type", Date)
+], CartOrder.prototype, "deliveryDate", void 0);
+__decorate([
     (0, sequelize_typescript_1.Column)({ type: sequelize_typescript_1.DataType.STRING, field: "notes" }),
     __metadata("design:type", String)
 ], CartOrder.prototype, "notes", void 0);
@@ -87,6 +91,10 @@ __decorate([
     (0, sequelize_typescript_1.Column)({ type: sequelize_typescript_1.DataType.JSON, field: "orderExtraCharges" }),
     __metadata("design:type", Array)
 ], CartOrder.prototype, "orderExtraCharges", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({ type: sequelize_typescript_1.DataType.TEXT, field: "specialNote" }),
+    __metadata("design:type", String)
+], CartOrder.prototype, "specialNote", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({ type: sequelize_typescript_1.DataType.STRING, unique: true }),
     __metadata("design:type", String)
